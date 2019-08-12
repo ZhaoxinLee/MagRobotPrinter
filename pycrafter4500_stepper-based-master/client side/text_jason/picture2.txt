@@ -1,0 +1,2 @@
+play()
+picture(1)

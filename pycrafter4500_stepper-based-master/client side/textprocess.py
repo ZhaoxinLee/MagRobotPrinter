@@ -17,7 +17,7 @@ class TextProcess(object):
         self.polygon = []
         self.ellipse = []
         self.variables = {} # store the variables in the editor
-        self.plot = MyPlot()
+        #self.plot = MyPlot()
         self.exposureTime = 0
         self.intensityUV = 0
         self.client = client
@@ -179,6 +179,7 @@ class TextProcess(object):
                 self.mm.oscYaw()
             if name == 'randomize':
                 self.mm.randomize(int(args[0]))
+
 
 # ==============================================================================
 # Macros
@@ -1709,6 +1710,7 @@ class TextProcess(object):
         vertices = np.column_stack((x,y))
         item = matplotlib.patches.Polygon(vertices,closed=True,color='white')
         self.polygon.append(item)
+
 
     def _show(self):
         empty = self.line == [] and self.rect == [] and self.cir == [] and self.polygon == [] and self.ring == [] and self.ellipse == []

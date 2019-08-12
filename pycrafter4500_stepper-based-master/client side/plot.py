@@ -2,12 +2,14 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
+from pylab import *
+from tkinter import *
 
 class MyPlot(object):
     mpl.rcParams['toolbar'] = 'None'
     def __init__(self):
         #plt.ion()
-        self.fig, self.ax = plt.subplots(facecolor=(0,0,0),figsize=(2,2))
+        self.fig, self.ax = plt.subplots(facecolor=(0,0,0),figsize=(2,2),frameon=True)
         # self.fig, self.ax = plt.subplots()
         self.fig.dpi = 300
         plt.subplots_adjust(left=0, bottom=0, right=1, top=1)
@@ -15,7 +17,13 @@ class MyPlot(object):
         plt.axis('off')
         self.fig.tight_layout()
         #plt.show()
-        plt.pause(0.005)
+        plt.pause(0.01)
+        #mngr = plt.get_current_fig_manager()
+        # to put it into the upper left corner for example:
+        #mngr.window.setGeometry(50,100,640, 545)
+        #geom = mngr.window.geometry()
+        #print(geom)
+        #x,y,dx,dy = geom.getRect()
 
     def clear(self):
         self.ax.lines = []          # delete all lines

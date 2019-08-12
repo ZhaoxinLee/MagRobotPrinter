@@ -6,9 +6,10 @@ import pycrafter4500
 from textprocess import TextProcess
 from client import Client
 from motormanager import MotorManager
+from gallery import Gallery
 from PyQt5 import uic
 from PyQt5.QtCore import QFile, QRegExp
-from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMessageBox
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMessageBox,QTableWidgetItem
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
@@ -22,6 +23,7 @@ tp = TextProcess()
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
+
 class GUI(QMainWindow,Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -33,6 +35,7 @@ class GUI(QMainWindow,Ui_MainWindow):
         self.setupCallbacksLED()
         self.setupMotors()
         self.setupCallbacksEditor()
+        self.setupGallery()
 
 
     def setupCallbacksLED(self):
@@ -50,6 +53,8 @@ class GUI(QMainWindow,Ui_MainWindow):
         self.currentFilePath = ''
         self.btn_editor_update.clicked.connect(self.on_btn_editor_update)
         self.highlighter = syntax.Highlighter(self.editor.document())
+    def setupGallery(self):
+        self.btn_runGallery.clicked.connect(self.on_btn_runGallery)
 
     def about(self):
         QMessageBox.about(self, "About Pycrafter 4500",
@@ -97,8 +102,11 @@ class GUI(QMainWindow,Ui_MainWindow):
         fileMenu = QMenu("&File", self)
         self.menuBar().addMenu(fileMenu)
         fileMenu.addAction("&New Editor", self.newFile, "Ctrl+N")
+        #fileMenu.addAction("&New Gallery", self.newGallery, "Ctrl+Shift+N")
         fileMenu.addAction("&Open Editor...", self.openFile, "Ctrl+O")
+        #fileMenu.addAction("&Open Gallery", self.openGallery, "Ctrl+Shift+O")
         fileMenu.addAction("&Save Editor", self.saveFile, "Ctrl+S")
+        #fileMenu.addAction("&Save Gallery", self.saveGallery, "Ctrl+Shift+S")
         fileMenu.addAction("E&xit", QApplication.instance().quit, "Ctrl+Q")
 
     def setupHelpMenu(self):
@@ -145,6 +153,23 @@ class GUI(QMainWindow,Ui_MainWindow):
         mm.oscYaw()
     def on_btn_oscRandomize(self):
         mm.randomize()
+    def on_btn_runGallery(self):
+        title = self.pte_galleryTitle.toPlainText()
+        list = []
+        for i in range(self.tbl_gallery.rowCount()):
+            new = []
+            for j in range(4):
+                if self.tbl_gallery.item(i, j) != None and self.tbl_gallery.item(i, j).text() != '':
+                    new.append(int(self.tbl_gallery.item(i, j).text()))
+            list.append(new)
+        gl = Gallery(title,list)
+        gl.show_slides()
+        gl.run()
+        # print(len(list))
+        # print(title)
+        #self.tbl_gallery.setItem(1,1,QTableWidgetItem("text"))
+
+
 
     def on_btn_editor_update(self):
         tp.clear()
