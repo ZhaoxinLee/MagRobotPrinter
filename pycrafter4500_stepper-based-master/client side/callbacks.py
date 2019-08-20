@@ -20,9 +20,9 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMess
 qtCreatorFile = "mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-#client = Client()
-#mm = MotorManager(client)
-tp = TextProcess()
+client = Client()
+mm = MotorManager(client)
+tp = TextProcess(client,mm)
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
@@ -220,11 +220,15 @@ class GUI(QMainWindow,Ui_MainWindow):
         for i in range(self.tbl_gallery.rowCount()):
             new = []
             for j in range(4):
-                if self.tbl_gallery.item(i, j) != None and self.tbl_gallery.item(i, j).text() != '':
+                if self.tbl_gallery.item(i, j) != None:
                     new.append(int(self.tbl_gallery.item(i, j).text()))
+                else:
+                    new.append('')
             list.append(new)
-        gl = Gallery(title, list, self.time_ms, self.intensity, self.currentFilePath)
-        gl.show_slides()
+        print(list)
+        gl = Gallery(title, list, self.time_ms, self.intensity, self.currentFilePath, mm)
+        gl.run_field()
+        #gl.show_slides()
         gl.run()
 
 
