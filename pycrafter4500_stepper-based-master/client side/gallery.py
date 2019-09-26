@@ -18,9 +18,9 @@ class Gallery(tk.Tk):
         tk.Tk.__init__(self)
         # set x, y position only
         w, h = self.winfo_screenwidth(), self.winfo_screenheight()
-        self.overrideredirect(1)
+        self.overrideredirect(0)
         self.geometry("%dx%d+0+0" % (w, h))
-        self.resizable(False, False)
+        self.resizable(True, True)
         self.bind("<Escape>", lambda event:self.destroy())
 
         self.mm = mm
@@ -57,7 +57,8 @@ class Gallery(tk.Tk):
         phi, theta = next(self.field)
         if self.img_name != None and self.img_name != self.image_files[0]:
             self.cure(self.time_ms)
-        self.mm.magneticFieldGo(phi,theta)
+        if self.img_name != None:
+            self.mm.magneticFieldGo(phi,theta)
         self.after(1,self.show_slides)
 
     def show_slides(self):

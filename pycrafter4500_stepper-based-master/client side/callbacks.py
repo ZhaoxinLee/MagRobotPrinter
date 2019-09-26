@@ -116,6 +116,7 @@ class GUI(QMainWindow,Ui_MainWindow):
 
     def newGallery(self):
         self.tbl_gallery.clearContents()
+        self.pte_galleryTitle.clear()
         self.currentFilePath = ''
 
     def openGallery(self,path=None):
