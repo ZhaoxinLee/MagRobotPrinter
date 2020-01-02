@@ -9,7 +9,7 @@ import mathfx
 
 
 class TextProcess(object):
-    def __init__(self,client,mm):
+    def __init__(self,client=None,mm=None):
         self.line = [] # [[x1,x2,y1,y2],[],...]
         self.rect = [] # store the squares created by function "rect(x,y,w,h)"
         self.cir = [] #
