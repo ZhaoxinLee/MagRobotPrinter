@@ -10,9 +10,8 @@ from textprocess import TextProcess
 from client import Client
 from motormanager import MotorManager
 from gallery import Gallery
-from vision import Vision
 from PyQt5 import uic
-from PyQt5.QtCore import QFile, QRegExp, QTimer
+from PyQt5.QtCore import QFile, QRegExp
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMessageBox,QTableWidgetItem
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
@@ -21,11 +20,9 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMess
 qtCreatorFile = "mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-#client = Client()
-#mm = MotorManager(client)
-tp = TextProcess()
-# vision = Vision(mode='Video')
-vision = Vision(mode='Camera')
+client = Client()
+mm = MotorManager(client)
+tp = TextProcess(client,mm)
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
@@ -34,8 +31,6 @@ class GUI(QMainWindow,Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
-        # self.updateRate = int(round(1000/vision.getFrameRate()))
-        self.updateRate = 15
         self.setupUi(self)
 
         self.setupFileMenu()
@@ -44,19 +39,9 @@ class GUI(QMainWindow,Ui_MainWindow):
         self.setupMotors()
         self.setupCallbacksEditor()
         self.setupGallery()
-        self.setupObjectDetection()
-        self.setupTimer()
 
         self.time_ms = 0
         self.intensity = 0
-
-    def setupTimer(self):
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update)
-        self.timer.start(self.updateRate) # msec
-
-    def update(self):
-        vision.updateFrame()
 
     def setupCallbacksLED(self):
         self.btn_LED_set.clicked.connect(self.on_btn_LED_set)
@@ -75,13 +60,6 @@ class GUI(QMainWindow,Ui_MainWindow):
         self.highlighter = syntax.Highlighter(self.editor.document())
     def setupGallery(self):
         self.btn_runGallery.clicked.connect(self.on_btn_runGallery)
-    def setupObjectDetection(self):     ##
-        self.btn_original.clicked.connect(self.on_btn_runOriginal)
-        self.btn_grayscale.clicked.connect(self.on_btn_runGrayscale)
-        self.btn_binary.clicked.connect(self.on_btn_runBinary)
-        self.btn_detectContour.clicked.connect(self.on_btn_runObjectDetection)
-        self.btn_susContour.clicked.connect(self.on_btn_susObjectDetection)
-        self.btn_clearContour.clicked.connect(self.on_btn_clearObjectDetection)
 
     def about(self):
         QMessageBox.about(self, "About Pycrafter 4500",
@@ -138,6 +116,7 @@ class GUI(QMainWindow,Ui_MainWindow):
 
     def newGallery(self):
         self.tbl_gallery.clearContents()
+        self.pte_galleryTitle.clear()
         self.currentFilePath = ''
 
     def openGallery(self,path=None):
@@ -150,7 +129,6 @@ class GUI(QMainWindow,Ui_MainWindow):
             book = xlrd.open_workbook(self.currentFilePath)
             sheet = book.sheets() [0]
             data = [[int(sheet.cell_value(r,c)) for c in range (sheet.ncols)]for r in range(sheet.nrows)]
-            self.tbl_gallery.clearContents()
             for i in range(len(data)):
                 for j in range(len(data[i])):
                     self.tbl_gallery.setItem(i,j,QTableWidgetItem(str(data[i][j])))
@@ -237,40 +215,26 @@ class GUI(QMainWindow,Ui_MainWindow):
         mm.oscYaw()
     def on_btn_oscRandomize(self):
         mm.randomize()
-
     def on_btn_runGallery(self):
         title = self.pte_galleryTitle.toPlainText()
         list = []
         for i in range(self.tbl_gallery.rowCount()):
             new = []
             for j in range(4):
-                if self.tbl_gallery.item(i, j) != None and self.tbl_gallery.item(i, j).text() != '':
+                if self.tbl_gallery.item(i, j) != None:
                     new.append(int(self.tbl_gallery.item(i, j).text()))
+                else:
+                    new.append('')
             list.append(new)
-        gl = Gallery(title, list, self.time_ms, self.intensity, self.currentFilePath)
-        gl.show_slides()
+        print(list)
+        gl = Gallery(title, list, self.time_ms, self.intensity, self.currentFilePath, mm)
+        gl.run_field()
+        #gl.show_slides()
         gl.run()
+
 
     def on_btn_editor_update(self):
         tp.clear()
         tp.set_exposureTime(self.spb_LED_exposureTime.value())
         tp.set_intensityUV(self.spb_LED_intensity.value())
         tp.process(self.editor.toPlainText().splitlines())
-
-    def on_btn_runOriginal(self):
-        vision.setOriginal()
-
-    def on_btn_runGrayscale(self):
-        vision.setGrayscale()
-
-    def on_btn_runBinary(self):
-        vision.setThreshold(self.spb_threshval.value(),self.spb_maxval.value())
-
-    def on_btn_runObjectDetection(self):
-        vision.setObjectDetection(self.spb_threshval.value(),self.spb_maxval.value())
-
-    def on_btn_susObjectDetection(self):
-        vision.susObjectDetection()
-
-    def on_btn_clearObjectDetection(self):
-        vision.setOriginal()
