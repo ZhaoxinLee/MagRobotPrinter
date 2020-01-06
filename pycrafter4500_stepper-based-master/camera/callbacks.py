@@ -11,8 +11,8 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMess
 qtCreatorFile = "mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-vision = Vision(mode='Video')
-# vision = Vision(mode='Camera')
+#vision = Vision(mode='Video')
+vision = Vision(mode='Camera')
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================

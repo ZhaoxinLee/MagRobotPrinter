@@ -23,14 +23,12 @@ def drawContour(ff,frame):
     # print(np.array(np.array(contours))[0])
     if contours != []:
         cnts = sorted(contours, key = cv2.contourArea, reverse = True)[:1]
-        cnts = np.squeeze(cnts,axis=0)
-        cnts = np.squeeze(cnts,axis=1)
+        # cnts = np.squeeze(cnts,axis=0)
+        cnts = np.squeeze(cnts[0],axis=1)
         # print(cnts[0][0])
         # print(cnts[0][1])
         # print(cnts.shape)
         # print(cnts[:,0])
-        # print(cnts[0].shape)
-        # print()
         # print(np.array(cnts).shape)
         # contour_routing = np.append(contour_routing, cnts[0], axis=0)
         # contour_routing.append(cnts[0])
