@@ -24,6 +24,7 @@ class Vision(object):
         self.state = 0
         self.firstFrameNo = None
         self.snapshotState = False
+        self.videoWritingState = False
 
     def updateFrame(self):
         if self.mode == 'Video':
@@ -72,6 +73,8 @@ class Vision(object):
                 timestr = time.strftime("%Y%m%d%H%M%S")
                 cv2.imwrite(os.getcwd()+'/snapshot/snapshot_'+timestr+'.png',shownFrame)
                 self.snapshotState = False
+            if self.videoWritingState:
+                self.videoWriter.write(shownFrame)
 
         else:
             ret, frame = self.cap.read()
@@ -97,12 +100,11 @@ class Vision(object):
                 cv2.imshow(self.windowName(),frame)
                 shownFrame = frame
             if self.snapshotState:
-                timestr = time.strftime("%Y%m%d%H%M%S")
+                timestr = time.strftime("%Y%m%d_%H%M%S")
                 cv2.imwrite(os.getcwd()+'/snapshot/snapshot_'+timestr+'.png',shownFrame)
                 self.snapshotState = False
-            # if self.isVideoWritingEnabled():
-            #     self.videoWriter.write(filterlib.color(frameProcessed))
-
+            if self.videoWritingState:
+                self.videoWriter.write(shownFrame)
 
     def windowName(self):
         return 'Camera'
@@ -154,18 +156,21 @@ class Vision(object):
     def setSnapshot(self):
         self.snapshotState = True
 
-    # #==============================================================================================
-    # # Video recording
-    # #==============================================================================================
-    # def createVideoWriter(self,fileName):
-    #     self.videoWriter = cv2.VideoWriter(fileName,fourcc=cv2.VideoWriter_fourcc(*'XVID'),fps=30.0,frameSize=(640,480),isColor=True)
-    #
-    # def startRecording(self,fileName):
-    #     self.createVideoWriter(fileName)
-    #     self.setVideoWritingEnabled(True)
-    #     print('Start recording' + fileName)
-    #
-    # def stopRecording(self):
-    #     self.setStateSnapshotEnabled(False)
-    #     self.videoWriter.release()
-    #     print('Stop recording.')
+    #==============================================================================================
+    # Video recording
+    #==============================================================================================
+
+    def startRecording(self,fileName):
+        timestr = time.strftime("%Y%m%d_%H%M%S")
+        self.videoWriter = cv2.VideoWriter(os.getcwd()+'/video/'+fileName+'_'+timestr+'.avi',fourcc=cv2.VideoWriter_fourcc(*'MJPG'),fps=self.cap.get(cv2.CAP_PROP_FPS),\
+                            frameSize=(int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))),isColor=True)
+        self.setVideoWritingEnabled(True)
+        print('Start recording '+fileName+'_'+timestr+'.avi...')
+
+    def stopRecording(self):
+        self.setVideoWritingEnabled(False)
+        self.videoWriter.release()
+        print('Stop recording.')
+
+    def setVideoWritingEnabled(self,state):
+        self.videoWritingState = state

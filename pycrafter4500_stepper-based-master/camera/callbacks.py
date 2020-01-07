@@ -11,8 +11,8 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMess
 qtCreatorFile = "mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-#vision = Vision(mode='Video')
-vision = Vision(mode='Camera')
+vision = Vision(mode='Video')
+#vision = Vision(mode='Camera')
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
@@ -49,11 +49,14 @@ class GUI(QMainWindow,Ui_MainWindow):
         self.btn_susContour.clicked.connect(self.on_btn_susObjectDetection)
         self.btn_clearContour.clicked.connect(self.on_btn_clearObjectDetection)
         self.btn_snapshot.clicked.connect(self.on_btn_snapshot)
+        self.btn_startRecording.clicked.connect(self.on_btn_startRecording)
+        self.btn_stopRecording.clicked.connect(self.on_btn_stopRecording)
 
     def about(self):
         QMessageBox.about(self, "About Vision",
                 "<p>For the model of <b>Camera</b>, please refer to OV2710 Webcam on Amazon. <br>" \
-                "Jason</p>")
+                "The <b>snapshot</b> will be stored under path <i>/snapshot</i>, the <b>video</b> recorded will be stored under path <i>/video</i>."
+                "<p align='right'>Jason</p>")
 
     def setupFileMenu(self):
         fileMenu = QMenu("&File", self)
@@ -85,3 +88,9 @@ class GUI(QMainWindow,Ui_MainWindow):
 
     def on_btn_snapshot(self):
         vision.setSnapshot()
+
+    def on_btn_startRecording(self):
+        vision.startRecording(self.pte_filename.toPlainText())
+
+    def on_btn_stopRecording(self):
+        vision.stopRecording()
