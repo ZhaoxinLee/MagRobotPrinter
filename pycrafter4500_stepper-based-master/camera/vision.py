@@ -11,6 +11,8 @@ class Vision(object):
         else:
             self.mode = mode
             self.cap = cv2.VideoCapture(0)
+            # self.frameCounter = 0
+            # self.startingTime = time.time()
         cv2.namedWindow(self.windowName(),16)
         cv2.moveWindow(self.windowName(), 0, 100)
         cv2.resizeWindow(self.windowName(), 640,512)
@@ -78,6 +80,8 @@ class Vision(object):
 
         else:
             ret, frame = self.cap.read()
+            # self.frameCounter += 1
+            # print(time.time() - self.startingTime,self.frameCounter)
             if self.isObjectDetectionRunning():
                 grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 filteredFrame = self.runThreshold(grayFrame)
@@ -162,8 +166,14 @@ class Vision(object):
 
     def startRecording(self,fileName):
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.videoWriter = cv2.VideoWriter(os.getcwd()+'/video/'+fileName+'_'+timestr+'.avi',fourcc=cv2.VideoWriter_fourcc(*'MJPG'),fps=self.cap.get(cv2.CAP_PROP_FPS),\
+        if self.mode == 'Camera':
+            self.videoWriter = cv2.VideoWriter(os.getcwd()+'/video/'+fileName+'_'+timestr+'.avi',fourcc=cv2.VideoWriter_fourcc(*'MJPG'),fps=30,\
                             frameSize=(int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))),isColor=True)
+        else:
+            self.videoWriter = cv2.VideoWriter(os.getcwd()+'/video/'+fileName+'_'+timestr+'.avi',fourcc=cv2.VideoWriter_fourcc(*'MJPG'),fps=self.cap.get(cv2.CAP_PROP_FPS),\
+                            frameSize=(int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))),isColor=True)
+        # to keep coincidence with the initial frame rate, we can use "fps=self.cap.get(cv2.CAP_PROP_FPS)"
+        # the initial frame rate of camera is 120.1fps
         self.setVideoWritingEnabled(True)
         print('Start recording '+fileName+'_'+timestr+'.avi...')
 

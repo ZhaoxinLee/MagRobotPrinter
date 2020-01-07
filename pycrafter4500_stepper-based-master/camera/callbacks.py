@@ -12,7 +12,7 @@ qtCreatorFile = "mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 vision = Vision(mode='Video')
-#vision = Vision(mode='Camera')
+# vision = Vision(mode='Camera')
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
@@ -22,16 +22,14 @@ class GUI(QMainWindow,Ui_MainWindow):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         # self.updateRate = int(round(1000/vision.getFrameRate()))
-        self.updateRate = 15
+        self.updateRate = 15 #ms, considering delay due to program running,
+        # the frame rate of camera is measured to be around 30fps when updateRate is 15ms
         self.setupUi(self)
 
         self.setupFileMenu()
         self.setupHelpMenu()
         self.setupObjectDetection()
         self.setupTimer()
-
-        self.time_ms = 0
-        self.intensity = 0
 
     def setupTimer(self):
         self.timer = QTimer()
