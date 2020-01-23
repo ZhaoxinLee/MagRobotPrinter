@@ -70,6 +70,8 @@ class Server(object):
             mm.motor_run(2,int(cmd[1]),int(cmd[2]),wait=False)
         if cmd[0] == 'fieldgo':
             mm.motor12_goto_field(int(cmd[1]),int(cmd[2]))
+        if cmd[0] == 'oscfieldgo':
+            mm.motor12_osc_goto_field(int(cmd[1]),int(cmd[2]))
         if cmd[0] == 'setphisingularity':
             mm.set_phiSingularity(int(cmd[1]))
         if cmd[0] == 'oscPitch':
