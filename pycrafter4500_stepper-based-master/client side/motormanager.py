@@ -26,6 +26,9 @@ class MotorManager(object):
     def magneticFieldGo(self,phi,theta):
         command = 'fieldgo,{},{}'.format(phi,theta)
         self._sendCommand(command)
+    def oscFieldGo(self,phi,theta):
+        command = 'oscfieldgo,{},{}'.format(phi,theta)
+        self._sendCommand(command)
     def setPhiSingularity(self,phi):
         command = 'setphisingularity,{}'.format(phi)
         self._sendCommand(command)
