@@ -42,8 +42,6 @@ class Gallery(tk.Tk):
                 self.field_phi.append(list[i][2])
             if self.list[i][3] != '':
                 self.field_theta.append(list[i][3])
-        print(self.field_phi,self.field_theta)
-        print(self.image_files)
 
         # allows repeat cycling through the pictures
         # store as (img_object, img_name) tuple

@@ -50,6 +50,7 @@ class GUI(QMainWindow,Ui_MainWindow):
         self.btn_motor1_run.clicked.connect(self.on_btn_motor1_run)
         self.btn_motor2_run.clicked.connect(self.on_btn_motor2_run)
         self.btn_phi_theta_run.clicked.connect(self.on_btn_phi_theta_run)
+        self.btn_preosc_run.clicked.connect(self.on_btn_preosc_run)
         self.btn_phi_at_singularity.clicked.connect(self.on_btn_phi_at_singularity)
         self.btn_oscPitch.clicked.connect(self.on_btn_oscPitch)
         self.btn_oscYaw.clicked.connect(self.on_btn_oscYaw)
@@ -206,6 +207,10 @@ class GUI(QMainWindow,Ui_MainWindow):
         phi = self.spb_phi.value()
         theta = self.spb_theta.value()
         mm.magneticFieldGo(phi,theta)
+    def on_btn_preosc_run(self):
+        phi = self.spb_phi_3.value()
+        theta = self.spb_theta_3.value()
+        mm.oscFieldGo(phi,theta)
     def on_btn_phi_at_singularity(self):
         phi = self.spb_phi_at_singularity.value()
         mm.setPhiSingularity(phi)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>966</width>
-    <height>531</height>
+    <width>879</width>
+    <height>473</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,8 +97,8 @@
      <rect>
       <x>200</x>
       <y>0</y>
-      <width>291</width>
-      <height>471</height>
+      <width>221</width>
+      <height>421</height>
      </rect>
     </property>
     <property name="title">
@@ -109,23 +109,131 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>271</width>
-       <height>391</height>
+       <width>201</width>
+       <height>161</height>
       </rect>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_editor_update">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>430</y>
-       <width>121</width>
+       <x>120</x>
+       <y>190</y>
+       <width>81</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
       <string>Run</string>
      </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>320</y>
+       <width>201</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Macro</string>
+     </property>
+     <widget class="QPushButton" name="btn_oscPitch">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>OscPitch</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_oscYaw">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>20</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>OscYaw</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_oscRandomize">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Randomize</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>230</y>
+       <width>201</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Stepper motor config</string>
+     </property>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>181</width>
+        <height>59</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Azimuth angle at singularity points</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QSpinBox" name="spb_phi_at_singularity">
+           <property name="minimum">
+            <number>-180</number>
+           </property>
+           <property name="maximum">
+            <number>180</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_phi_at_singularity">
+           <property name="text">
+            <string>Set</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
@@ -273,121 +381,13 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_3">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>310</y>
-      <width>201</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Stepper motor config</string>
-    </property>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>181</width>
-       <height>59</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Azimuth angle at singularity points</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QSpinBox" name="spb_phi_at_singularity">
-          <property name="minimum">
-           <number>-180</number>
-          </property>
-          <property name="maximum">
-           <number>180</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_phi_at_singularity">
-          <property name="text">
-           <string>Set</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_6">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>390</y>
-      <width>201</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Macro</string>
-    </property>
-    <widget class="QPushButton" name="btn_oscPitch">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>OscPitch</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_oscYaw">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>OscYaw</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_oscRandomize">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Randomize</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QGroupBox" name="groupBox_8">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>420</x>
       <y>0</y>
       <width>461</width>
-      <height>391</height>
+      <height>421</height>
      </rect>
     </property>
     <property name="title">
@@ -399,7 +399,7 @@
        <x>10</x>
        <y>60</y>
        <width>431</width>
-       <height>261</height>
+       <height>301</height>
       </rect>
      </property>
      <row>
@@ -437,6 +437,11 @@
        <string>7</string>
       </property>
      </row>
+     <row>
+      <property name="text">
+       <string>8</string>
+      </property>
+     </row>
      <column>
       <property name="text">
        <string>Picture #</string>
@@ -461,8 +466,8 @@
     <widget class="QPushButton" name="btn_runGallery">
      <property name="geometry">
       <rect>
-       <x>360</x>
-       <y>340</y>
+       <x>350</x>
+       <y>380</y>
        <width>75</width>
        <height>23</height>
       </rect>
@@ -478,9 +483,9 @@
      <property name="geometry">
       <rect>
        <x>80</x>
-       <y>20</y>
+       <y>25</y>
        <width>143</width>
-       <height>31</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -494,6 +499,9 @@
        <width>0</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
      <property name="centerOnScroll">
       <bool>false</bool>
@@ -513,13 +521,85 @@
      </property>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="groupBox_7">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>310</y>
+      <width>201</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Pre-oscillation</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>23</y>
+       <width>191</width>
+       <height>54</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>theta (deg)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="spb_phi_3">
+        <property name="minimum">
+         <number>-360</number>
+        </property>
+        <property name="maximum">
+         <number>360</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>phi (deg)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="spb_theta_3">
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>180</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="btn_preosc_run">
+     <property name="geometry">
+      <rect>
+       <x>14</x>
+       <y>80</y>
+       <width>181</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Run</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>966</width>
+     <width>879</width>
      <height>21</height>
     </rect>
    </property>
