@@ -2,10 +2,10 @@ import numpy as np
 import cv2, math
 
 def detectBiggestContour(imageFiltered,imageOriginal):
-    nOfSamples = 1
+    nOfSamples = 4
     contours, hierarchy = cv2.findContours(imageFiltered, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cnts = sorted(contours, key = cv2.contourArea, reverse = True)[:nOfSamples]
-    if len(cnts) > 1:
+    if len(cnts) > 0:
         targetCnt = cnts[0] # cnt[0] is the edge of the screen
         rect = cv2.minAreaRect(targetCnt) # (x,y)(w,h)theta
         box = np.int0(cv2.boxPoints(rect)) # vertices of the bounding rect
@@ -17,12 +17,13 @@ def detectBiggestContour(imageFiltered,imageOriginal):
 
 
 def drawContour(ff,frame):
+    nOfSamples = 4
     #print(ff.shape)
     contours, _ = cv2.findContours(ff, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cnts = np.zeros((0,2),dtype=np.uint8)
     # print(np.array(np.array(contours))[0])
     if contours != []:
-        cnts = sorted(contours, key = cv2.contourArea, reverse = True)[:1]
+        cnts = sorted(contours, key = cv2.contourArea, reverse = True)[:nOfSamples]
         # cnts = np.squeeze(cnts,axis=0)
         cnts = np.squeeze(cnts[0],axis=1)
         # print(cnts[0][0])

@@ -11,8 +11,8 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMess
 qtCreatorFile = "mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-vision = Vision(mode='Video')
-# vision = Vision(mode='Camera')
+# vision = Vision(mode='Video')
+vision = Vision(mode='Camera')
 #=========================================================
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
@@ -43,6 +43,7 @@ class GUI(QMainWindow,Ui_MainWindow):
         self.btn_original.clicked.connect(self.on_btn_runOriginal)
         self.btn_grayscale.clicked.connect(self.on_btn_runGrayscale)
         self.btn_binary.clicked.connect(self.on_btn_runBinary)
+        self.btn_filterBlue.clicked.connect(self.on_btn_filterBlue)
         self.btn_detectContour.clicked.connect(self.on_btn_runObjectDetection)
         self.btn_susContour.clicked.connect(self.on_btn_susObjectDetection)
         self.btn_clearContour.clicked.connect(self.on_btn_clearObjectDetection)
@@ -74,6 +75,9 @@ class GUI(QMainWindow,Ui_MainWindow):
 
     def on_btn_runBinary(self):
         vision.setThreshold(self.spb_threshval.value(),self.spb_maxval.value())
+
+    def on_btn_filterBlue(self):
+        vision.setFilterBlue()
 
     def on_btn_runObjectDetection(self):
         vision.setObjectDetection(self.spb_threshval.value(),self.spb_maxval.value())
