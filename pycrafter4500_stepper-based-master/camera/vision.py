@@ -20,6 +20,7 @@ class Vision(object):
         self._isGrayscale = False
         self._isThresholdRunning = False
         self._isObjectDetectionRunning = False
+        self._isFilterBlueRunning = False
         self.threshold = None
         self.maxval = None
         self.cnt_routing = np.zeros((0,2),dtype=np.uint8)
@@ -83,14 +84,29 @@ class Vision(object):
             # self.frameCounter += 1
             # print(time.time() - self.startingTime,self.frameCounter)
             if self.isObjectDetectionRunning():
-                grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                filteredFrame = self.runThreshold(grayFrame)
-                processedFrame, cnts = drawContour(filteredFrame,frame)
+                # hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+                # lower_blue = np.array([50, 140, 140]) #hue, saturation and lightness
+                # upper_blue = np.array([130, 255, 255])
+                lower_blue = np.array([160, 50, 0])
+                upper_blue = np.array([255, 130, 10])
+                mask = cv2.inRange(frame, lower_blue, upper_blue)
+                # cv2.imshow('frame', frame)
+                # grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                # filteredFrame = self.runThreshold(grayFrame)
+                processedFrame, cnts = drawContour(mask,frame)
                 if self.state == 0:
                     self.cnt_routing = np.append(self.cnt_routing, cnts, axis=0)
                 processedFrame[self.cnt_routing[:,1],self.cnt_routing[:,0]] = (0, 255, 0)
                 cv2.imshow(self.windowName(),processedFrame)
                 shownFrame = processedFrame
+            elif self.isFilterBlueRunning():
+                #hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+                lower_blue = np.array([160, 50, 0])
+                upper_blue = np.array([255, 130, 10])
+                mask = cv2.inRange(frame, lower_blue, upper_blue)
+                # filteredFrame = cv2.bitwise_and(frame, frame, mask = mask)
+                cv2.imshow(self.windowName(),mask)
+                shownFrame = mask
             elif self.isThresholdRunning():
                 grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 filteredFrame = self.runThreshold(grayFrame)
@@ -126,10 +142,14 @@ class Vision(object):
     def isObjectDetectionRunning(self):
         return self._isObjectDetectionRunning
 
+    def isFilterBlueRunning(self):
+        return self._isFilterBlueRunning
+
     def setOriginal(self):
         self._isGrayscale = False
         self._isThresholdRunning = False
         self._isObjectDetectionRunning = False
+        self._isFilterBlueRunning = False
         self.cnt_routing = np.zeros((0,2),dtype=np.uint8)
         self.state = 0
         self.firstFrameNo = None
@@ -138,17 +158,22 @@ class Vision(object):
         self._isGrayscale = True
         self._isThresholdRunning = False
         self._isObjectDetectionRunning = False
+        self._isFilterBlueRunning = False
 
     def setThreshold(self,threshold,maxval):
         self.threshold = threshold
         self.maxval = maxval
         self._isThresholdRunning = True
         self._isObjectDetectionRunning = False
+        self._isFilterBlueRunning = False
 
     def setObjectDetection(self,threshold,maxval):
         self.threshold = threshold
         self.maxval = maxval
         self._isObjectDetectionRunning = True
+
+    def setFilterBlue(self):
+        self._isFilterBlueRunning = True
 
     def susObjectDetection(self):
         self.state = 2
