@@ -3,7 +3,7 @@ import threading
 import time
 
 class Server(object):
-    def __init__(self,motormanager,host='192.168.31.118',port=9997):
+    def __init__(self,motormanager,host='192.168.31.18',port=9997):
         self.host = host
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -21,7 +21,7 @@ class Server(object):
         con, address = self.sock.accept()
         print("[Connected] {}".format(address))
         self.client.append((con, address))
-        handle_thread = threading.Thread(target=self._handler, args=(con, address), daemon=True)
+        handle_thread = threading.Thread(target=self._handler, args=(con, address))#, daemon=False)
         handle_thread.start()
     def remove_conection(self,con,address):
         print('[Terminated] {}'.format(address))

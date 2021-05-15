@@ -130,6 +130,7 @@ class MotorManager():
         while True:
             theta_msr = self.sensor.theta # [0,180] deg
             errorField = theta_cmd - theta_msr
+            print(errorField)
             if errorField < tol and errorField > -tol:
                 break
             if errorField >= tol:
@@ -139,7 +140,7 @@ class MotorManager():
             if thetaMode == -1:
                 direction = reverseDir(direction)
             errorShaft = fieldDeg2shaftDeg(theta_cmd) - fieldDeg2shaftDeg(theta_msr)
-            numsteps = max(int(self.degperstep * abs(errorShaft)),1)
+            numsteps = max(int(self.degperstep * abs(errorField)),1)
             self.motor_run(2,numsteps,direction)
             time.sleep(.5)
 
