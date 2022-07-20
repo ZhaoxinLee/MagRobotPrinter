@@ -1,5 +1,6 @@
 ﻿import math
 import time
+import os, sys
 from vision import Vision
 from PyQt5 import uic
 from PyQt5.QtCore import QFile, QRegExp, QTimer
@@ -8,8 +9,9 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMess
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
 # UI config
-qtCreatorFile = "mainwindow.ui"
-Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
+# qtCreatorFile = "mainwindow.ui"
+# Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
+Ui_MainWindow, QtBaseClass = uic.loadUiType('C:\\Users\\dtyzl\\Documents\\MagRobotPrinter-master\\pycrafter4500_stepper-based-master\\camera\\mainwindow.ui')
 
 # vision = Vision(mode='Video')
 vision = Vision(mode='Camera')
@@ -22,7 +24,7 @@ class GUI(QMainWindow,Ui_MainWindow):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         # self.updateRate = int(round(1000/vision.getFrameRate()))
-        self.updateRate = 15 #ms, considering delay due to program running,
+        self.updateRate = 1 #ms, considering delay due to program running,
         # the frame rate of camera is measured to be around 30fps when updateRate is 15ms
         self.setupUi(self)
 
