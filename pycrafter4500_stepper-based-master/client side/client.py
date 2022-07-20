@@ -2,7 +2,7 @@ import socket
 import threading
 
 class Client(object):
-    def __init__(self,host='192.168.31.118',port=9997):
+    def __init__(self,host='192.168.31.18',port=9997):
         self.host = host
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -17,8 +17,10 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMenu, QMess
 # a class that handles the signal and callbacks of the GUI
 #=========================================================
 # UI config
-qtCreatorFile = "mainwindow.ui"
-Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
+# qtCreatorFile = "mainwindow.ui"
+# Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
+Ui_MainWindow, QtBaseClass = uic.loadUiType('C:\\Users\\dtyzl\\Documents\\MagRobotPrinter-master\\pycrafter4500_stepper-based-master\\client side\\mainwindow.ui')
+
 
 client = Client()
 mm = MotorManager(client)
@@ -232,7 +234,7 @@ class GUI(QMainWindow,Ui_MainWindow):
                     new.append('')
             list.append(new)
         print(list)
-        gl = Gallery(title, list, self.time_ms, self.intensity, self.currentFilePath, mm)
+        gl = Gallery(title, list, self.time_ms, self.intensity, self.currentFilePath, self.spb_passes.value(), mm)
         gl.run_field()
         #gl.show_slides()
         gl.run()

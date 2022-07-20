@@ -174,10 +174,11 @@ class dlpc350(object):
         # time.sleep(0.02)
 
         # done writing, read feedback from dlpc
-        try:
-            self.ans = self.dlpc.read(0x81, 64)
-        except USBError as e:
-            print('USB Error:', e)
+
+        # try:
+        #     self.ans = self.dlpc.read(0x81, 64)
+        # except USBError as e:
+        #     print('USB Error:', e)
 
         time.sleep(0.02)
 

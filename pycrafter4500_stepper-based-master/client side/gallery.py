@@ -13,7 +13,7 @@ from motormanager import MotorManager
 class Gallery(tk.Tk):
     '''Tk window/label adjusts to size of image'''
 
-    def __init__(self, img_title, list, time_ms, intensity, path, mm):
+    def __init__(self, img_title, list, time_ms, intensity, path, passes, mm):
         # the root will be self
         tk.Tk.__init__(self)
         # set x, y position only
@@ -32,6 +32,7 @@ class Gallery(tk.Tk):
         self.image_files = []
         self.delay = []
         self.img_name = None
+        self.passes = passes
         self.field_phi = []
         self.field_theta = []
         for i in range(len(self.list)):
@@ -53,8 +54,11 @@ class Gallery(tk.Tk):
 
     def run_field(self):
         phi, theta = next(self.field)
-        if self.img_name != None and self.img_name != self.image_files[0]:
-            self.cure(self.time_ms)
+        for i in range(self.passes):
+            if self.img_name != None and self.img_name != self.image_files[0]:
+                self.cure(self.time_ms)
+                if i != self.passes-1:
+                    time.sleep(3)
         if self.img_name != None:
             self.mm.magneticFieldGo(phi,theta)
         self.after(1,self.show_slides)
@@ -70,6 +74,7 @@ class Gallery(tk.Tk):
         self.img_name = img_name
         self.title(img_name)
         self.after(img_delay, self.run_field)
+
 
     def photo_image(self, jpg_filename):
 
